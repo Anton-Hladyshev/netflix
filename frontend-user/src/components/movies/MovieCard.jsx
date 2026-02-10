@@ -1,59 +1,43 @@
 import Button from '../common/Button';
 
-function MovieHero({ movie }) {
+function MovieCard({ movie }) {
   return (
-    <div className="relative h-[80vh] w-full">
-      {/* Background Image */}
-      <div className="absolute inset-0">
+    <div className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105">
+      {/* Image principale */}
+      <div className="relative aspect-[2/3]">
         <img
-          src={movie.backdrop}
+          src={movie.poster}
           alt={movie.title}
           className="w-full h-full object-cover"
         />
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        {/* Badge de note */}
+        <div className="absolute top-2 right-2 bg-black/80 backdrop-blur-sm px-2 py-1 rounded">
+          <span className="text-yellow-400 font-bold text-sm">
+            ⭐ {movie.rating}
+          </span>
+        </div>
       </div>
-      {/* Content */}
-      <div className="relative container mx-auto px-4 h-full flex items-center">
-        <div className="max-w-2xl">
-          {/* Title */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 drop-shadow-2xl">
-            {movie.title}
-          </h1>
-          {/* Meta information */}
-          <div className="flex items-center flex-wrap gap-3 mb-4">
-            <span className="bg-primary px-3 py-1 rounded text-sm font-bold">
-              {movie.rating}/10
-            </span>
-            <span className="text-gray-300">{movie.year}</span>
-            <span className="text-gray-300">{movie.duration} min</span>
-            <span className="border border-gray-500 px-2 py-0.5 text-sm rounded">
-              {movie.genre}
-            </span>
-          </div>
-          {/* Description */}
-          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed drop-shadow-lg">
-            {movie.description}
-          </p>
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="shadow-2xl">
-              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-              </svg>
-              Louer pour {movie.price}€
-            </Button>
-            <Button variant="secondary" size="lg">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Plus d'infos
-            </Button>
-          </div>
+      {/* Overlay au hover */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+        <h3 className="text-xl font-bold mb-2">{movie.title}</h3>
+        <div className="flex items-center space-x-3 mb-3 text-sm">
+          <span className="text-green-400 font-semibold">{movie.rating}/10</span>
+          <span className="text-gray-400">{movie.year}</span>
+          <span className="text-gray-400">{movie.duration}min</span>
+        </div>
+        <p className="text-sm text-gray-300 mb-4 line-clamp-2">
+          {movie.description}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button size="sm" className="flex-1">
+            ▶ Louer {movie.price}€
+          </Button>
+          <Button variant="outline" size="sm" className="flex-1">
+            + Info
+          </Button>
         </div>
       </div>
     </div>
   );
 }
-export default MovieHero;
+export default MovieCard;
