@@ -35,7 +35,6 @@ function Navbar() {
                     { /* User Section */ }
                     <div className="flex items-center space-x-4">
                         <SearchBar />
-                        { /*Search icon */ }
 
                         {/* User Avatar */}
                         <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">

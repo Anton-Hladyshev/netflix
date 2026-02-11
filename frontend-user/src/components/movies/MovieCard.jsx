@@ -1,4 +1,6 @@
 import Button from '../common/Button';
+import { useState } from 'react';
+
 
 function MovieCard({ movie }) {
   const genreColors = {
@@ -12,6 +14,20 @@ function MovieCard({ movie }) {
     'Fantastique': 'bg-green-500',
     'Animation': 'bg-indigo-500'
   };
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(movie.likes || 0);
+
+  const handleLike= () => {
+    if (!isLiked) {
+      setLikes(likes - 1);
+    } else {
+      setLikes(likes + 1);
+    }
+  }
+  const setLiked = () => {
+    setIsLiked(!isLiked);
+  }
 
   return (
     <div className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105">
@@ -38,6 +54,10 @@ function MovieCard({ movie }) {
       {/* Overlay au hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
         <h3 className="text-xl font-bold mb-2">{movie.title}</h3>
+        <button 
+          onClick={() => {setLiked(); handleLike();}}
+          className={`px-4 py-2 rounded ${ isLiked ? 'bg-red-500' : 'bg-gray-500'}`}>{isLiked ? '❤️' : '🤍'} {likes} likes
+        </button>
         <div className="flex items-center space-x-3 mb-3 text-sm">
           <span className="text-green-400 font-semibold">{movie.rating}/10</span>
           <span className="text-gray-400">{movie.year}</span>

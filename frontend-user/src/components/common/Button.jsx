@@ -9,9 +9,9 @@ function Button({
   const baseClasses = 'font-semibold rounded transition-all duration-300 inline-flex items-center justify-center';
   
   const variants = {
-    primary: 'bg-primary hover:bg-primary-dark text-white shadow-lg hover:shadow-xl',
-    secondary: 'bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm',
-    outline: 'border-2 border-white/50 hover:border-white hover:bg-white/10 text-white'
+    primary: 'bg-primary hover:bg-primary-dark text-black shadow-lg hover:shadow-xl',
+    secondary: 'bg-white/20 hover:bg-white/30 text-black backdrop-blur-sm',
+    outline: 'border-2 border-black/50 hover:border-black hover:bg-black/10 text-black'
   };
   
   const sizes = {
