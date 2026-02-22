@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "../movies/SearchBar";
+import moviesData from '../../../../data/movies.json';
 
 function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [movies] = useState(moviesData);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -44,7 +46,7 @@ function Navbar() {
                     </div>
                     { /* User Section */ }
                     <div className="flex items-center space-x-4">
-                        <SearchBar />
+                        <SearchBar movies={movies} onSearch={(movie) => console.log(movie)} />
 
                         {/* User Avatar */}
                         <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
