@@ -1,8 +1,9 @@
 import Button from '../common/Button';
 import { useState } from 'react';
+import CartButton from '../common/Cartbutton';
 
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, addToCart }) {
   const genreColors = {
     'Action': 'bg-red-500',
     'Comédie': 'bg-yellow-500',
@@ -67,7 +68,11 @@ function MovieCard({ movie }) {
           {movie.description}
         </p>
         <div className="flex flex-col sm:flex-row gap-2">
-          <Button size="sm" className="flex-1">
+          <Button 
+            size="sm" 
+            className="flex-1"
+            onClick={() => addToCart && addToCart(movie)}
+          >
             ▶ Louer {movie.price}€
           </Button>
           <Button variant="outline" size="sm" className="flex-1">

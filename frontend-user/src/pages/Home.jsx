@@ -7,11 +7,28 @@ import moviesData from '../../../data/movies.json';
 import MovieFilter from "../components/movies/MovieFilter";
 
 function Home() {
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const [allMovies] = useState(moviesData);
-    const [filteredMovies, setFilteredMovies] = useState(moviesData);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  const [allMovies] = useState(moviesData);
+  const [filteredMovies, setFilteredMovies] = useState(moviesData);
+  
+  const [cartItems, setCartItems] = useState([]);
+  
+  const addToCart = (movie) => {
+    setCartItems((prevItems) => {
+      if (prevItems.some(item => item.id === movie.id)) {
+        return prevItems;
+      }
+      return [...prevItems, movie];
+    });
+  };
+  
+  const removeFromCart = (movieId) => {
+    setCartItems((prevItems) => {
+      return prevItems.filter(item => item.id !== movieId);
+    });
+  };
 
     useEffect(() => {
         const loadMovies = async () => {
@@ -41,29 +58,29 @@ function Home() {
     const popularMoviesByGenre = movies.filter(movie => movie.genre.includes(genre)).slice(0, 5);
     const popularMoviesByYear = movies.filter(movie => movie.year >= year).slice(0, 5);
 
-    return (
-        <div className="flex flex-col min-h-screen">
-        {/* Navigation */}
-        <Navbar />
+  return (
+    <div className="flex flex-col min-h-screen">
+      {/* Navigation */}
+      <Navbar cartItems={cartItems} removeFromCart={removeFromCart} />
+      
+      {/* Main Content */}
+      <main className="flex-1">
+        <MovieHero movie={movies?.[0]} />
         
-        {/* Main Content */}
-        <main className="flex-1">
-            <MovieHero movie={movies?.[0]} />
-            
-            <div className="space-y-8 pb-16">
-            <MovieList title="Films populaires" movies={popularMovies} />
-            <MovieList title={`Films populaires dans le genre ${genre}`} movies={popularMoviesByGenre} />
-            <MovieList title={`Films populaires sortis après ${year}`} movies={popularMoviesByYear} />
-            <MovieList title="Films disponibles" movies={filteredMovies} />
-            {/* Filter */}
-            <MovieFilter movies={allMovies} onFilter={setFilteredMovies} />
-            </div>
-        </main>
-        
-        {/* Footer */}
-        <Footer />
+        <div className="space-y-8 pb-16">
+          <MovieList title="Films populaires" movies={popularMovies} addToCart={addToCart} />
+          <MovieList title={`Films populaires dans le genre ${genre}`} movies={popularMoviesByGenre} addToCart={addToCart} />
+          <MovieList title={`Films populaires sortis après ${year}`} movies={popularMoviesByYear} addToCart={addToCart} />
+          <MovieList title="Films disponibles" movies={filteredMovies} addToCart={addToCart} />
+          {/* Filter */}
+          <MovieFilter movies={allMovies} onFilter={setFilteredMovies} />
         </div>
-    );
+      </main>
+      
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
     }
 
 export default Home;

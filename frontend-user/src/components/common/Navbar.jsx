@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import SearchBar from "../movies/SearchBar";
 import moviesData from '../../../../data/movies.json';
+import CartButton from "./Cartbutton";
 
-function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [movies] = useState(moviesData);
+function Navbar({ cartItems, removeFromCart }) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [movies] = useState(moviesData);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -16,48 +17,47 @@ function Navbar() {
             }
     }, []);
 
-    return (
-        <nav className={`fixed top-0 w-full z-50 transition-colors duration-300 ${isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent'}`}>
-            <div className="container mx-auto px-4 py-4">
-                <div className="flex items-center justify-between">
-                    {/* Logo */}
-                    <div className="flex items-center space-x-8">
-                        <h1 className="text-primary text-3xl font-bold tracking-tight">
-                            NETFLIX
-                        </h1>
-                        {/* Navigation Links */}
-                        <ul className="hidden md:flex space-x-6">
-                            <li>
-                                <a href="#" className="hover:text-gray-300 transition-colors">Home
-                                    Accueil
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-gray-300 transition-colors">
-                                    Films
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-gray-300 transition-colors">
-                                    Mes locations
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    { /* User Section */ }
-                    <div className="flex items-center space-x-4">
-                        <SearchBar movies={movies} onSearch={(movie) => console.log(movie)} />
-
-                        {/* User Avatar */}
-                        <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
-                            <span className="text-sm font-bold">U</span>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <nav className={`fixed top-0 left-0 right-0 w-full z-50 transition-colors duration-300 ${isScrolled ? 'bg-black' : 'bg-gradient-to-b from-black/80 to-transparent'}`}>
+      <div className="container mx-auto px-4 py-4 max-w-7xl">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-8">
+            <h1 className="text-primary text-3xl font-bold tracking-tight">
+              NETFLIX
+            </h1>
+            {/* Navigation Links */}
+            <ul className="hidden md:flex space-x-6">
+              <li>
+                <a href="#" className="hover:text-gray-300 transition-colors">
+                  Accueil
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-300 transition-colors">
+                  Films
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-gray-300 transition-colors">
+                  Mes locations
+                </a>
+              </li>
+            </ul>
+          </div>
+          {/* User Section */}
+          <div className="flex items-center space-x-4">
+            <SearchBar movies={movies} onSearch={(movie) => console.log(movie)} />
+            <CartButton cartItems={cartItems} removeFromCart={removeFromCart} />
+            {/* User Avatar */}
+            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
+              <span className="text-sm font-bold">U</span>
             </div>
-        </nav>
-
-    )
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
         
 }
 
