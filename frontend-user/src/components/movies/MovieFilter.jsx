@@ -7,10 +7,11 @@ function MovieFilter({ movies, onFilter }) {
 
   const handleGenreChange = (genre) => {
     setSelectedGenre(genre);
-    // TODO: Filtrer les films
     if (genre === 'all') {
+      setSelectedGenre('all');
       onFilter(movies);
     } else {
+      setSelectedGenre(genre);
       const filtered = movies.filter(movie => movie.genre.includes(genre));
       onFilter(filtered);
     }
@@ -19,9 +20,9 @@ function MovieFilter({ movies, onFilter }) {
   return (
     <div className="flex flex-wrap gap-2 mb-6 px-4">
       <button
-        onClick={() => handleGenreChange('all')}
+        onClick={() => handleGenreChange('All')}
         className={`px-4 py-2 rounded-lg transition ${
-          selectedGenre === 'all'
+          selectedGenre === 'All'
             ? 'bg-red-600 text-white hover:bg-red-700'
             : 'bg-black text-white hover:bg-gray-800 border border-gray-600'
         }`}

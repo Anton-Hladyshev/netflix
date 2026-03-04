@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "../movies/SearchBar";
 import moviesData from '../../../../data/movies.json';
 import CartButton from "./Cartbutton";
+import { NavLink, Link } from "react-router-dom";
 
 function Navbar({ cartItems, removeFromCart }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,21 +28,21 @@ function Navbar({ cartItems, removeFromCart }) {
               NETFLIX
             </h1>
             {/* Navigation Links */}
-            <ul className="hidden md:flex space-x-6">
+            <ul className="hidden md:flex space-x-6 text-white">
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
+                <NavLink to="/" className="hover:text-gray-300 transition-colors">
                   Accueil
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
+                <NavLink to="/films" className="hover:text-gray-300 transition-colors">
                   Films
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300 transition-colors">
+                <NavLink to="/my-rentals" className="hover:text-gray-300 transition-colors">
                   Mes locations
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -50,7 +51,7 @@ function Navbar({ cartItems, removeFromCart }) {
             <SearchBar movies={movies} onSearch={(movie) => console.log(movie)} />
             <CartButton cartItems={cartItems} removeFromCart={removeFromCart} />
             {/* User Avatar */}
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors">
+            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center cursor-pointer hover:bg-primary-dark transition-colors text-white">
               <span className="text-sm font-bold">U</span>
             </div>
           </div>

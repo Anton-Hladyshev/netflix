@@ -5,6 +5,7 @@ import MovieHero from "../components/movies/MovieHero";
 import Navbar from "../components/common/Navbar";
 import moviesData from '../../../data/movies.json';
 import MovieFilter from "../components/movies/MovieFilter";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -48,12 +49,13 @@ function Home() {
     }, [allMovies]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner fullScreen={true} text="Chargement de Netflix..." size="lg" />;
     }
 
     const genre = "Science-Fiction"; 
     const year = 2010;
 
+    // eslint-disable-next-line react-hooks/purity
     const popularMovies = [...movies].sort(() => 0.5 - Math.random()).slice(0, 5);
     const popularMoviesByGenre = movies.filter(movie => movie.genre.includes(genre)).slice(0, 5);
     const popularMoviesByYear = movies.filter(movie => movie.year >= year).slice(0, 5);
@@ -65,15 +67,15 @@ function Home() {
       
       {/* Main Content */}
       <main className="flex-1">
-        <MovieHero movie={movies?.[0]} />
+        <MovieHero movie={movies?.[0]} addToCart={addToCart} />
         
         <div className="space-y-8 pb-16">
+          <MovieFilter movies={allMovies} onFilter={setFilteredMovies} />
           <MovieList title="Films populaires" movies={popularMovies} addToCart={addToCart} />
           <MovieList title={`Films populaires dans le genre ${genre}`} movies={popularMoviesByGenre} addToCart={addToCart} />
           <MovieList title={`Films populaires sortis après ${year}`} movies={popularMoviesByYear} addToCart={addToCart} />
           <MovieList title="Films disponibles" movies={filteredMovies} addToCart={addToCart} />
           {/* Filter */}
-          <MovieFilter movies={allMovies} onFilter={setFilteredMovies} />
         </div>
       </main>
       

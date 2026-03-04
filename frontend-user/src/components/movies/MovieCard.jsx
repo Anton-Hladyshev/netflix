@@ -1,9 +1,9 @@
 import Button from '../common/Button';
 import { useState } from 'react';
-import CartButton from '../common/Cartbutton';
-
+import { useNavigate } from 'react-router-dom';
 
 function MovieCard({ movie, addToCart }) {
+  const navigate = useNavigate();
   const genreColors = {
     'Action': 'bg-red-500',
     'Comédie': 'bg-yellow-500',
@@ -21,14 +21,18 @@ function MovieCard({ movie, addToCart }) {
 
   const handleLike= () => {
     if (!isLiked) {
-      setLikes(likes - 1);
-    } else {
       setLikes(likes + 1);
+    } else {
+      setLikes(likes - 1);
     }
   }
   const setLiked = () => {
     setIsLiked(!isLiked);
   }
+
+  const handleNavigateToDetail = () => {
+    navigate(`/movie/${movie.id}`);
+  };
 
   return (
     <div className="group relative overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105">
@@ -54,11 +58,19 @@ function MovieCard({ movie, addToCart }) {
       </div>
       {/* Overlay au hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-        <h3 className="text-xl font-bold mb-2">{movie.title}</h3>
-        <button 
-          onClick={() => {setLiked(); handleLike();}}
-          className={`px-4 py-2 rounded ${ isLiked ? 'bg-red-500' : 'bg-gray-500'}`}>{isLiked ? '❤️' : '🤍'} {likes} likes
-        </button>
+        <h3 className="text-xl text-white font-bold mb-2">{movie.title}</h3>
+        
+        <div className="mb-3">
+          <Button
+            variant={isLiked ? "danger" : "secondary"}
+            size="xs"
+            onClick={() => {setLiked(); handleLike();}}
+            className="text-white"
+          >
+            {isLiked ? '❤️' : '🤍'} {likes} likes
+          </Button>
+        </div>
+        
         <div className="flex items-center space-x-3 mb-3 text-sm">
           <span className="text-green-400 font-semibold">{movie.rating}/10</span>
           <span className="text-gray-400">{movie.year}</span>
@@ -69,13 +81,19 @@ function MovieCard({ movie, addToCart }) {
         </p>
         <div className="flex flex-col sm:flex-row gap-2">
           <Button 
+            variant="primary"
             size="sm" 
             className="flex-1"
             onClick={() => addToCart && addToCart(movie)}
           >
             ▶ Louer {movie.price}€
           </Button>
-          <Button variant="outline" size="sm" className="flex-1">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1"
+            onClick={handleNavigateToDetail}
+          >
             + Info
           </Button>
         </div>
