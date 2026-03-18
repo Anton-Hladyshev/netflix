@@ -144,10 +144,9 @@ movieSchema.statics.getPopularMovies = function (limit = 10) {
 
 // MÉTHODE STATIQUE pour rechercher des films
 movieSchema.statics.search = function (query) {
-    return this.find({
-        $text: { $search: query },
-        isAvailable: true,
-    }).sort({ score: { $meta: "textScore" } });
+    return this.find(
+        {...query}
+    );
 };
 
 movieSchema.statics.getByGenre = function (genre) {

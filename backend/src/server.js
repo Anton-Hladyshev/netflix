@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/database.js';
 import mongoose from 'mongoose';
+import movieRoutes from './routes/movie.routes.js';
+// import userRoutes from './routes/userRoutes.js';
 
 // Charger les variables d'environnement
 dotenv.config();
@@ -11,6 +13,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+
+app.use(express.json()); // Middleware pour lire le JSON
+//app.use('/api/users', userRoutes);
+app.listen(3000, () => console.log("Serveur lancé sur le port 3000"));
+
+app.use('/api/movies', movieRoutes);
 // Connecter à MongoDB
 connectDB();
 
@@ -29,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
         next();
     });
 }
-
+app.use('/api/movies', movieRoutes);
 // Routes de test
 app.get('/', (req, res) => {
     res.json({
@@ -54,10 +62,8 @@ app.get('/api/health', (req, res) => {
 });
 
 // TODO: Importer et utiliser les routes - Prochaine séance si vous n'êtes pas trop lent ☺
-// import movieRoutes from './routes/movie.routes.js';
 // import authRoutes from './routes/auth.routes.js';
 // import rentalRoutes from './routes/rental.routes.js';
-// app.use('/api/movies', movieRoutes);
 // app.use('/api/auth', authRoutes);
 // app.use('/api/rentals', rentalRoutes);
 
